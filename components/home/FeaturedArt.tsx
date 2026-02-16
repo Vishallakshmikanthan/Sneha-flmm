@@ -7,7 +7,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { artworks } from "@/lib/data/artworks";
 import ArtworkCard from "@/components/ui/ArtworkCard";
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function FeaturedArt() {
     const sectionRef = useRef<HTMLDivElement>(null);

@@ -9,7 +9,9 @@ import { categories } from "@/lib/data/artworks";
 import ThreeDCard from "@/components/ui/ThreeDCard";
 import MagneticButton from "@/components/ui/MagneticButton";
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function ScrollStorytelling() {
     const containerRef = useRef<HTMLDivElement>(null);
