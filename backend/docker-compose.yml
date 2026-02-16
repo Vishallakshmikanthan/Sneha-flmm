@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: starrynight-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: starrynight
+      POSTGRES_PASSWORD: dev_password_change_in_production
+      POSTGRES_DB: starrynight_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - starrynight-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U starrynight" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: starrynight-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - starrynight-network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    command: redis-server --appendonly yes
+
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    container_name: starrynight-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      DATABASE_URL: postgresql://starrynight:dev_password_change_in_production@postgres:5432/starrynight_dev
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: dev-secret-change-in-production-minimum-32-chars
+      CORS_ORIGIN: http://localhost:3000
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./src:/app/src
+      - ./prisma:/app/prisma
+      - /app/node_modules
+    networks:
+      - starrynight-network
+    command: npm run start:dev
+
+  # Database Admin Tool (Adminer)
+  adminer:
+    image: adminer:latest
+    container_name: starrynight-adminer
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - starrynight-network
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  starrynight-network:
+    driver: bridge

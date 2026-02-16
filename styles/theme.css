@@ -1,0 +1,103 @@
+/* Design System Theme Variables */
+
+:root {
+    /* Colors - Midnight Blues */
+    --midnight-950: #0B0F1A;
+    --midnight-900: #0F1B2E;
+    --midnight-800: #1B2735;
+    --midnight-700: #243447;
+
+    /* Colors - Gold */
+    --gold: #D4AF37;
+    --gold-light: #F5E6C4;
+    --gold-dark: #CBA135;
+
+    /* Colors - Glow */
+    --glow-blue: #4F70E8;
+    --glow-cyan: #6FA8FF;
+
+    /* Colors - Text */
+    --text-primary: #F8F8F8;
+    --text-muted: #B8C0CC;
+
+    /* Spacing Scale (8px base) */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 16px;
+    --space-4: 24px;
+    --space-5: 32px;
+    --space-6: 48px;
+    --space-7: 64px;
+    --space-8: 96px;
+    --space-9: 128px;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.25);
+    --shadow-deep: 0 20px 60px rgba(0, 0, 0, 0.4);
+    --shadow-glow-gold: 0 0 40px rgba(212, 175, 55, 0.4);
+    --shadow-glow-blue: 0 0 40px rgba(79, 112, 232, 0.3);
+
+    /* Animation Timing */
+    --duration-fast: 200ms;
+    --duration-normal: 300ms;
+    --duration-slow: 500ms;
+    --duration-slower: 800ms;
+    --duration-slowest: 1200ms;
+
+    /* Animation Easing */
+    --ease-in-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+    --ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Z-index Layers */
+    --z-background: -10;
+    --z-base: 0;
+    --z-content: 10;
+    --z-header: 50;
+    --z-modal: 100;
+    --z-cursor: 10000;
+    --z-progress: 10001;
+
+    /* Font Families */
+    --font-display: var(--font-playfair), serif;
+    --font-body: var(--font-inter), sans-serif;
+}
+
+/* Utility Classes */
+
+.text-display {
+    font-family: var(--font-display);
+}
+
+.text-body {
+    font-family: var(--font-body);
+}
+
+/* Spacing Utilities */
+.space-y-custom>*+* {
+    margin-top: var(--space-4);
+}
+
+/* Shadow Utilities */
+.shadow-soft {
+    box-shadow: var(--shadow-soft);
+}
+
+.shadow-deep {
+    box-shadow: var(--shadow-deep);
+}
+
+.shadow-glow-gold {
+    box-shadow: var(--shadow-glow-gold);
+}
+
+.shadow-glow-blue {
+    box-shadow: var(--shadow-glow-blue);
+}
