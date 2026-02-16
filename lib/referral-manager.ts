@@ -107,7 +107,7 @@ export function checkRewardEligibility(
     referredArtistSales: number = 0,
     totalApprovedReferrals: number = 0
 ): boolean {
-    const structure = REFERRAL_REWARD_STRUCTURE[rewardType];
+    // const structure = REFERRAL_REWARD_STRUCTURE[rewardType];
 
     switch (rewardType) {
         case 'commission_bonus':

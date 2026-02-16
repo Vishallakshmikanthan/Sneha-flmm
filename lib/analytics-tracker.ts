@@ -19,7 +19,7 @@ export async function trackArtworkView(
     // In a real implementation, this would send data to an analytics service
     // For now, we'll use localStorage for demo purposes
 
-    const event = {
+    const event: StoredEvent = {
         type: 'view',
         artworkId,
         userId,
@@ -41,7 +41,7 @@ export async function trackArtworkClick(
     userId?: string,
     source?: string
 ): Promise<void> {
-    const event = {
+    const event: StoredEvent = {
         type: 'click',
         artworkId,
         userId,
@@ -62,7 +62,7 @@ export async function trackArtworkConversion(
     userId: string,
     amount: number
 ): Promise<void> {
-    const event = {
+    const event: StoredEvent = {
         type: 'conversion',
         artworkId,
         userId,
@@ -75,10 +75,24 @@ export async function trackArtworkConversion(
     localStorage.setItem('analytics_events', JSON.stringify(events));
 }
 
+interface StoredEvent {
+    type: 'view' | 'click' | 'conversion';
+    artworkId: string;
+    userId?: string;
+    timestamp: string;
+    metadata?: {
+        referrer?: string;
+        device?: string;
+        country?: string;
+    };
+    source?: string;
+    amount?: number;
+}
+
 /**
  * Get stored analytics events
  */
-function getStoredEvents(): any[] {
+function getStoredEvents(): StoredEvent[] {
     if (typeof window === 'undefined') return [];
 
     const stored = localStorage.getItem('analytics_events');
@@ -97,7 +111,7 @@ export function calculateArtistMetrics(
     const events = getStoredEvents();
 
     // Filter events for this artist's artworks within date range
-    const artistEvents = events.filter((event: any) => {
+    const artistEvents = events.filter((event: StoredEvent) => {
         const eventDate = new Date(event.timestamp);
         return (
             artworkIds.includes(event.artworkId) &&
@@ -107,18 +121,18 @@ export function calculateArtistMetrics(
     });
 
     // Calculate views
-    const viewEvents = artistEvents.filter((e: any) => e.type === 'view');
-    const uniqueViewers = new Set(viewEvents.map((e: any) => e.userId || 'anonymous'));
+    const viewEvents = artistEvents.filter((e: StoredEvent) => e.type === 'view');
+    const uniqueViewers = new Set(viewEvents.map((e: StoredEvent) => e.userId || 'anonymous'));
 
     // Calculate clicks
-    const clickEvents = artistEvents.filter((e: any) => e.type === 'click');
+    const clickEvents = artistEvents.filter((e: StoredEvent) => e.type === 'click');
 
     // Calculate conversions
-    const conversionEvents = artistEvents.filter((e: any) => e.type === 'conversion');
+    const conversionEvents = artistEvents.filter((e: StoredEvent) => e.type === 'conversion');
 
     // Calculate revenue
     const totalRevenue = conversionEvents.reduce(
-        (sum: number, e: any) => sum + (e.amount || 0),
+        (sum: number, e: StoredEvent) => sum + (e.amount || 0),
         0
     );
     const averageSalePrice = conversionEvents.length > 0
@@ -157,10 +171,10 @@ export function calculateArtistMetrics(
  * Generate trend data from events
  */
 function generateTrendData(
-    events: any[],
+    events: StoredEvent[],
     startDate: Date,
     endDate: Date,
-    valueKey?: string
+    valueKey?: keyof StoredEvent
 ): { date: Date; value: number }[] {
     const trendMap = new Map<string, number>();
 
@@ -173,10 +187,11 @@ function generateTrendData(
     }
 
     // Aggregate events by date
-    events.forEach((event: any) => {
+    events.forEach((event: StoredEvent) => {
         const dateKey = new Date(event.timestamp).toISOString().split('T')[0];
         const currentValue = trendMap.get(dateKey) || 0;
-        const eventValue = valueKey ? (event[valueKey] || 1) : 1;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const eventValue = valueKey ? ((event[valueKey] as any) || 1) : 1;
         trendMap.set(dateKey, currentValue + eventValue);
     });
 
@@ -198,7 +213,7 @@ export function calculateAudienceDemographics(
 ): AudienceDemographics {
     const events = getStoredEvents();
 
-    const artistEvents = events.filter((event: any) => {
+    const artistEvents = events.filter((event: StoredEvent) => {
         const eventDate = new Date(event.timestamp);
         return (
             artworkIds.includes(event.artworkId) &&
@@ -210,7 +225,7 @@ export function calculateAudienceDemographics(
 
     // Geographic data
     const countryMap = new Map<string, number>();
-    artistEvents.forEach((event: any) => {
+    artistEvents.forEach((event: StoredEvent) => {
         const country = event.metadata?.country || 'Unknown';
         countryMap.set(country, (countryMap.get(country) || 0) + 1);
     });
@@ -225,8 +240,8 @@ export function calculateAudienceDemographics(
 
     // Device data
     const deviceMap = new Map<string, number>();
-    artistEvents.forEach((event: any) => {
-        const device = event.metadata?.device || 'desktop';
+    artistEvents.forEach((event: StoredEvent) => {
+        const device = (event.metadata?.device as string) || 'desktop';
         deviceMap.set(device, (deviceMap.get(device) || 0) + 1);
     });
 
@@ -242,7 +257,7 @@ export function calculateAudienceDemographics(
         hourMap.set(i, 0);
     }
 
-    artistEvents.forEach((event: any) => {
+    artistEvents.forEach((event: StoredEvent) => {
         const hour = new Date(event.timestamp).getHours();
         hourMap.set(hour, (hourMap.get(hour) || 0) + 1);
     });
@@ -254,8 +269,8 @@ export function calculateAudienceDemographics(
 
     // Referral sources
     const referralMap = new Map<string, number>();
-    artistEvents.forEach((event: any) => {
-        const source = event.metadata?.referrer || 'Direct';
+    artistEvents.forEach((event: StoredEvent) => {
+        const source = (event.metadata?.referrer as string) || 'Direct';
         referralMap.set(source, (referralMap.get(source) || 0) + 1);
     });
 
@@ -284,7 +299,7 @@ export function calculateArtworkPerformance(
     const events = getStoredEvents();
 
     return artworkIds.map((artworkId) => {
-        const artworkEvents = events.filter((event: any) => {
+        const artworkEvents = events.filter((event: StoredEvent) => {
             const eventDate = new Date(event.timestamp);
             return (
                 event.artworkId === artworkId &&
@@ -293,12 +308,12 @@ export function calculateArtworkPerformance(
             );
         });
 
-        const views = artworkEvents.filter((e: any) => e.type === 'view').length;
-        const clicks = artworkEvents.filter((e: any) => e.type === 'click').length;
-        const conversions = artworkEvents.filter((e: any) => e.type === 'conversion').length;
+        const views = artworkEvents.filter((e: StoredEvent) => e.type === 'view').length;
+        const clicks = artworkEvents.filter((e: StoredEvent) => e.type === 'click').length;
+        const conversions = artworkEvents.filter((e: StoredEvent) => e.type === 'conversion').length;
         const revenue = artworkEvents
-            .filter((e: any) => e.type === 'conversion')
-            .reduce((sum: number, e: any) => sum + (e.amount || 0), 0);
+            .filter((e: StoredEvent) => e.type === 'conversion')
+            .reduce((sum: number, e: StoredEvent) => sum + (e.amount || 0), 0);
 
         const ctr = views > 0 ? (clicks / views) * 100 : 0;
         const conversionRate = clicks > 0 ? (conversions / clicks) * 100 : 0;

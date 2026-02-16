@@ -7,14 +7,22 @@ interface MagneticButtonProps {
     children: React.ReactNode;
     className?: string;
     onClick?: () => void;
+
     strength?: number; // How strong the magnetic pull is (default: 0.5)
+    variant?: "primary" | "secondary" | "outline";
+    size?: "sm" | "md" | "lg";
 }
 
 export default function MagneticButton({
     children,
     className = "",
     onClick,
+
     strength = 0.5,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    variant = "primary",
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    size = "md",
 }: MagneticButtonProps) {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const textRef = useRef<HTMLSpanElement>(null);

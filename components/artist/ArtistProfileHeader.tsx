@@ -1,10 +1,11 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import { Artist } from '@/types/artwork';
 import ArtistBadges from './ArtistBadges';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import { ArtistBadge } from '@/types/artist-ecosystem';
+import Image from 'next/image';
 
 interface ArtistProfileHeaderProps {
     artist: Artist;
@@ -34,11 +35,13 @@ export default function ArtistProfileHeader({ artist }: ArtistProfileHeaderProps
                         transition={{ duration: 0.5 }}
                         className="relative"
                     >
-                        <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-[#D4AF37] shadow-2xl">
-                            <img
+                        <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-[#D4AF37] shadow-2xl">
+                            <Image
                                 src={artist.imageUrl}
                                 alt={artist.name}
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 768px) 160px, 192px"
                             />
                         </div>
 

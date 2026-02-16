@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import Image from "next/image";
 
 interface ThreeDCardProps {
     title: string;
@@ -80,7 +81,13 @@ export default function ThreeDCard({
                 className="absolute inset-0 z-0 bg-cover bg-center opacity-60 group-hover:opacity-80 transition-opacity duration-500"
             >
                 {imageSrc ? (
-                    <img src={imageSrc} alt={title} className="w-full h-full object-cover" />
+                    <Image
+                        src={imageSrc}
+                        alt={title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                    />
                 ) : (
                     <div className="w-full h-full bg-gradient-to-t from-black via-transparent to-transparent" />
                 )}

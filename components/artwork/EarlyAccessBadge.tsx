@@ -1,6 +1,6 @@
 'use client';
 
-import { MembershipTier, MEMBERSHIP_TIERS } from '@/types/membership';
+import { MEMBERSHIP_TIERS } from '@/types/membership';
 import { DropCountdown } from '@/types/early-access';
 import { formatTimeRemaining } from '@/lib/early-access-manager';
 import { motion } from 'framer-motion';

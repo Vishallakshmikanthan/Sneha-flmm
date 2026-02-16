@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
         // For MVP, return default preferences
         const preferences: UserPreferences = {
             sessionId,
-            userId,
+            userId: userId || undefined,
             categoryAffinity: {},
             priceRange: {
                 min: 0,

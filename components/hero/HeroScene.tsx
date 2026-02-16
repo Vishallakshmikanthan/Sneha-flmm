@@ -3,7 +3,6 @@
 import { useRef, useMemo, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { useTexture } from "@react-three/drei";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -120,24 +119,28 @@ function Starfield() {
                     count={count}
                     array={positions}
                     itemSize={3}
+                    args={[positions, 3]}
                 />
                 <bufferAttribute
                     attach="attributes-size"
                     count={count}
                     array={sizes}
                     itemSize={1}
+                    args={[sizes, 1]}
                 />
                 <bufferAttribute
                     attach="attributes-depth"
                     count={count}
                     array={depths}
                     itemSize={1}
+                    args={[depths, 1]}
                 />
                 <bufferAttribute
                     attach="attributes-twinkleOffset"
                     count={count}
                     array={twinkleOffsets}
                     itemSize={1}
+                    args={[twinkleOffsets, 1]}
                 />
             </bufferGeometry>
             <shaderMaterial

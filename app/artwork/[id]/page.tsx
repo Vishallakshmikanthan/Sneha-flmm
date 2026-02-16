@@ -6,13 +6,14 @@ import { SimilarArtworks } from "@/components/recommendations/SimilarArtworks";
 import ScrollSequence from "@/components/animation/ScrollSequence";
 
 interface ArtworkPageProps {
-    params: {
+    params: Promise<{
         id: string;
-    };
+    }>;
 }
 
-export default function ArtworkPage({ params }: ArtworkPageProps) {
-    const artwork = artworks.find((art) => art.id === params.id);
+export default async function ArtworkPage({ params }: ArtworkPageProps) {
+    const { id } = await params;
+    const artwork = artworks.find((art) => art.id === id);
 
     if (!artwork) {
         notFound();

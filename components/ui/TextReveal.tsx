@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 
@@ -12,10 +12,6 @@ interface TextRevealProps {
 
 export default function TextReveal({ children, className, delay = 0 }: TextRevealProps) {
     const elementRef = useRef<HTMLHeadingElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: elementRef,
-        offset: ["start end", "end start"],
-    });
 
     const words = children.split(" ");
 

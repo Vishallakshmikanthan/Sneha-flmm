@@ -7,7 +7,6 @@ import {
     TierProgress,
     MEMBERSHIP_TIERS,
     TIER_PROGRESSION,
-    CollectorEngagement,
 } from '@/types/membership';
 
 // ============================================================================
@@ -17,7 +16,8 @@ import {
 export function calculateMembershipTier(
     totalPurchases: number,
     totalSpend: number,
-    hasActiveSubscription: boolean = false
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _hasActiveSubscription: boolean = false
 ): MembershipTier {
     // Platinum is invite-only, cannot be auto-calculated
     if (totalPurchases >= TIER_PROGRESSION.gold.minimumPurchases! &&
@@ -227,7 +227,8 @@ export function calculateRenewalDate(
 export function calculateSubscriptionPrice(
     tier: MembershipTier,
     billingCycle: 'monthly' | 'annual',
-    discountCode?: string
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _discountCode?: string
 ): number {
     const tierDef = MEMBERSHIP_TIERS[tier];
     let price = tierDef.price;

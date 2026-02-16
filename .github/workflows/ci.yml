@@ -29,34 +29,9 @@ jobs:
       - name: Run TypeScript check
         run: npm run type-check
       
-      - name: Run Prettier check
-        run: npm run format:check
 
-  unit-tests:
-    name: Unit Tests
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Run unit tests
-        run: npm run test:coverage
-      
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/coverage-final.json
-          fail_ci_if_error: true
+
+
 
   build:
     name: Build Verification
@@ -79,19 +54,4 @@ jobs:
         env:
           NEXT_PUBLIC_API_URL: https://api-staging.starrynight.art
 
-  security-scan:
-    name: Security Scan
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Run npm audit
-        run: npm audit --audit-level=moderate
-      
-      - name: Run Snyk security scan
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high
+

@@ -1,7 +1,6 @@
 'use client';
 
 import { LimitedEdition } from '@/types/artist-ecosystem';
-import { formatSerialNumberForDisplay } from '@/lib/utils/serial-number-generator';
 import { motion } from 'framer-motion';
 
 interface LimitedEditionBadgeProps {

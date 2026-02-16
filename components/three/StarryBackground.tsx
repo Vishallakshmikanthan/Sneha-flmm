@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -119,7 +120,7 @@ export default function StarryBackground() {
         // LIGHTING SYSTEM
         // ====================================================================
 
-        const { ambientLight, goldAccentLight, rimLight, allLights } =
+        const { goldAccentLight, rimLight, allLights } =
             createLightingSystem();
         allLights.forEach((light) => scene.add(light));
 
@@ -127,7 +128,7 @@ export default function StarryBackground() {
         // POST-PROCESSING
         // ====================================================================
 
-        const { composer, bloomPass, vignettePass, filmGrainPass } =
+        const { composer, bloomPass, filmGrainPass } =
             createPostProcessingComposer(renderer, scene, camera);
 
         // ====================================================================

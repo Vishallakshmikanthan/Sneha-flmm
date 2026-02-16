@@ -5,13 +5,14 @@ import ArtworkGrid from '@/components/gallery/ArtworkGrid';
 import { notFound } from 'next/navigation';
 
 interface ArtistPageProps {
-    params: {
+    params: Promise<{
         id: string;
-    };
+    }>;
 }
 
-export default function ArtistPage({ params }: ArtistPageProps) {
-    const artist = artists.find((a) => a.id === params.id || a.slug === params.id);
+export default async function ArtistPage({ params }: ArtistPageProps) {
+    const { id } = await params;
+    const artist = artists.find((a) => a.id === id || a.slug === id);
 
     if (!artist) {
         notFound();
@@ -56,7 +57,8 @@ export async function generateStaticParams() {
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: ArtistPageProps) {
-    const artist = artists.find((a) => a.id === params.id || a.slug === params.id);
+    const { id } = await params;
+    const artist = artists.find((a) => a.id === id || a.slug === id);
 
     if (!artist) {
         return {

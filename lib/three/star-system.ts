@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { THREE_CONFIG, COLORS } from '@/lib/constants';
+import { COLORS } from '@/lib/constants';
 
 /**
  * Create an optimized star system with instanced geometry and custom shaders
@@ -120,6 +120,7 @@ export const createParticleStreaks = (count: number = 50): THREE.LineSegments =>
     });
 
     const streaks = new THREE.LineSegments(geometry, material);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (streaks as any).velocities = velocities; // Store velocities for animation
 
     return streaks;
@@ -133,6 +134,7 @@ export const animateParticleStreaks = (
     scrollSpeed: number = 0
 ): void => {
     const positions = streaks.geometry.attributes.position.array as Float32Array;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const velocities = (streaks as any).velocities as number[];
     const count = velocities.length;
 

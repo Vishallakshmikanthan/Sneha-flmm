@@ -1,5 +1,4 @@
 import {
-    ArtistReputation,
     ReputationMetrics,
     ArtistBadge,
     BadgeDefinition

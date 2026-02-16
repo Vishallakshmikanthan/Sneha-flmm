@@ -17,7 +17,7 @@ export default function FeaturedArt() {
         if (!sectionRef.current || !scrollRef.current) return;
 
         const ctx = gsap.context(() => {
-            const cards = scrollRef.current!.children;
+
             const totalWidth = scrollRef.current!.scrollWidth;
             const viewportWidth = window.innerWidth;
             const distance = totalWidth - viewportWidth + 64; // + padding

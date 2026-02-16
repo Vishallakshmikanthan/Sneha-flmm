@@ -18,8 +18,6 @@ interface ReferralDashboardProps {
 }
 
 export default function ReferralDashboard({
-    artistId,
-    artistName,
     referralCode,
     metrics,
 }: ReferralDashboardProps) {

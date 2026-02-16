@@ -16,7 +16,7 @@ import {
 // Event Tracker Configuration
 // ============================================================================
 
-const BATCH_SIZE = 10; // Send events in batches of 10
+// const BATCH_SIZE = 10; // Send events in batches of 10
 const BATCH_INTERVAL = 5000; // Send every 5 seconds
 const MAX_QUEUE_SIZE = 50; // Maximum events in queue before forcing send
 

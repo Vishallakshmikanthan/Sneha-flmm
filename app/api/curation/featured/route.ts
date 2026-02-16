@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { mockCuratedCollections, getFeaturedCollections } from '@/lib/data/curated-collections';
+import { getFeaturedCollections } from '@/lib/data/curated-collections';
 
 /**
  * GET /api/curation/featured
@@ -14,7 +14,7 @@ export async function GET() {
             data: featured,
             count: featured.length,
         });
-    } catch (error) {
+    } catch {
         return NextResponse.json(
             {
                 success: false,

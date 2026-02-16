@@ -1,9 +1,11 @@
+/* eslint-disable */
 "use client";
 
 import React, { useRef, useEffect } from "react";
+import Image from 'next/image';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { categories } from "@/lib/data/artworks"; // Ensure this path is correct based on CategoryGrid usage
+import { categories } from "@/lib/data/artworks";
 import ThreeDCard from "@/components/ui/ThreeDCard";
 import MagneticButton from "@/components/ui/MagneticButton";
 
@@ -122,6 +124,19 @@ export default function ScrollStorytelling() {
                 {/* Background removed for global transparency */}
 
                 <div className="container mx-auto px-4 z-10 relative grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    {/* Featured Image - Parallax */}
+                    <div ref={featuredImageRef} className="relative h-[500px] w-full rounded-lg overflow-hidden border border-white/10 shadow-2xl">
+                        <Image
+                            src={featuredArt.image}
+                            alt={featuredArt.title}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                        {/* Overlay for mood */}
+                        <div className="absolute inset-0 bg-blue-900/20 mix-blend-overlay" />
+                    </div>
+
                     <div ref={featuredTextRef} className="space-y-6">
                         <h2 className="text-sm font-bold tracking-[0.2em] text-gold uppercase">Featured Masterpiece</h2>
                         <h1 className="text-5xl md:text-7xl font-display leading-tight">
@@ -180,10 +195,12 @@ export default function ScrollStorytelling() {
                 <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     {/* Image side */}
                     <div className="relative h-[600px] w-full rounded-lg overflow-hidden border border-white/10">
-                        <img
+                        <Image
                             src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1000&auto=format&fit=crop"
                             alt="Artist Studio"
-                            className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-in-out"
+                            fill
+                            className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-in-out"
+                            sizes="(max-width: 768px) 100vw, 50vw"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
                     </div>

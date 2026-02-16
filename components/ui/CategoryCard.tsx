@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 import { Category } from "@/lib/data/artworks";
-import Image from "next/image";
+
 
 interface CategoryCardProps {
     category: Category;
