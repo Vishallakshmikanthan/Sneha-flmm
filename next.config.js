@@ -4,10 +4,23 @@ const nextConfig = {
 
     // Image optimization
     images: {
-        domains: [
-            'starrynight-images.s3.amazonaws.com',
-            'res.cloudinary.com',
-            'd2w9rnfcy7mm78.cloudfront.net'
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'starrynight-images.s3.amazonaws.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'res.cloudinary.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'd2w9rnfcy7mm78.cloudfront.net',
+            },
+            {
+                protocol: 'https',
+                hostname: 'images.unsplash.com',
+            },
         ],
         formats: ['image/avif', 'image/webp'],
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
