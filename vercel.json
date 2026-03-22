@@ -4,17 +4,6 @@
     "installCommand": "npm ci",
     "framework": "nextjs",
     "outputDirectory": ".next",
-    "env": {
-        "NEXT_PUBLIC_API_URL": "@api-url",
-        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key",
-        "NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME": "@cloudinary-cloud-name"
-    },
-    "build": {
-        "env": {
-            "NEXT_PUBLIC_API_URL": "@api-url",
-            "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key"
-        }
-    },
     "headers": [
         {
             "source": "/(.*)",
