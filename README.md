@@ -1,4 +1,4 @@
-# 🌟 Starry Night – Premium Art Marketplace
+# 🌟 Starry Night – Premium Art Marketplace (3D - Immersive Website)
 
 An immersive 3D animated e-commerce platform for luxury digital art, featuring cinematic scroll storytelling and premium interactions inspired by Van Gogh's "The Starry Night."
 
